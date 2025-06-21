@@ -1,11 +1,18 @@
 <script lang="ts">
 	import { carrito } from '$lib/stores/cart';
-	import { eliminarDelCarrito } from '$lib/stores/cart';
+	import { goto } from '$app/navigation';
 
-	import { get } from 'svelte/store';
-
+	// Reactividad automática al store
 	$: items = $carrito;
 	$: total = items.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+
+	function eliminar(id: number) {
+		carrito.eliminar(id);
+	}
+
+	function irAlCheckout() {
+		goto('/checkout');
+	}
 </script>
 
 <section class="min-h-screen bg-gray-100 p-6">
@@ -23,25 +30,23 @@
 							<p class="text-gray-800 font-bold">${item.precio * item.cantidad}</p>
 						</div>
 					</div>
-					<!-- Eliminar botón (opcional más adelante) -->
+
+					<!-- Botón ❌ para eliminar -->
 					<button
-					on:click={() => eliminarDelCarrito(item.id)}
-					class="text-red-600 hover:text-red-800 font-bold text-lg"
-					title="Eliminar del carrito">
-					❌
-				</button>
+						on:click={() => eliminar(item.id)}
+						class="text-red-600 hover:text-red-800 font-bold text-lg"
+						title="Eliminar del carrito">
+						❌
+					</button>
 				</div>
 			{/each}
 
 			<div class="text-right mt-6">
 				<p class="text-xl font-semibold">Total: ${total}</p>
-				<a href="/checkout">
-					<button class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
-						Ir al checkout
-					</button>
-				</a>
-				<button class="mt-4 ml-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-					Finalizar compra
+				<button
+					on:click={irAlCheckout}
+					class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+					Ir al checkout
 				</button>
 			</div>
 		</div>

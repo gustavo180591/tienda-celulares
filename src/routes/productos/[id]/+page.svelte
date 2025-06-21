@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-    import { agregarAlCarrito, carrito } from '$lib/stores/cart';
-
+	import { carrito } from '$lib/stores/cart';
 
 	let id: number;
 	let producto: { id: number; nombre: string; precio: number; imagen: string } | null = null;
@@ -19,8 +18,11 @@
 		producto = productos.find(p => p.id === id) ?? null;
 	});
 
-	// Opcional: mostrar el contenido del carrito en consola
-	$: $carrito && console.log($carrito);
+	function agregar() {
+		if (producto) {
+			carrito.agregar({ ...producto, cantidad: 1 });
+		}
+	}
 </script>
 
 {#if producto}
@@ -31,12 +33,10 @@
 				<h1 class="text-3xl font-bold mb-2">{producto.nombre}</h1>
 				<p class="text-gray-700 text-xl mb-4">${producto.precio}</p>
 				<button
-	class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-	on:click={() =>
-		agregarAlCarrito({ ...producto!, cantidad: 1 })
-	}>
-	Agregar al carrito
-</button>
+					on:click={agregar}
+					class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+					Agregar al carrito
+				</button>
 			</div>
 		</div>
 	</section>

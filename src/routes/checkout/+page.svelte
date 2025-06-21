@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { carrito, limpiarCarrito } from '$lib/stores/cart';
+	import { carrito } from '$lib/stores/cart';
 	import { goto } from '$app/navigation';
 
 	let confirmado = false;
@@ -7,7 +7,7 @@
 	let total = items.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
 	function confirmarCompra() {
-		limpiarCarrito();
+		carrito.limpiar();
 		confirmado = true;
 		setTimeout(() => {
 			goto('/productos');
