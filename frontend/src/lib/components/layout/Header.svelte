@@ -1,20 +1,47 @@
 <script lang="ts">
-	import { carrito } from '$lib/stores/cart';
-	$: totalItems = $carrito.reduce((sum, item) => sum + item.cantidad, 0);
-</script>
-
-<nav class="flex items-center justify-between bg-white px-6 py-4 shadow-md">
-	<a href="/" class="text-xl font-bold text-blue-600">📱 Tienda Celulares</a>
-
-	<div class="space-x-6 text-base text-gray-700">
-		<a href="/productos" class="hover:text-blue-600">Productos</a>
-		<a href="/carrito" class="hover:text-blue-600">
-			Carrito
-			{#if totalItems > 0}
-				<span class="ml-1 rounded-full bg-blue-600 px-2 py-0.5 text-sm text-white"
-					>{totalItems}</span
-				>
-			{/if}
-		</a>
+	import { page } from '$app/stores';
+	import { derived } from 'svelte/store';
+	import { goto } from '$app/navigation';
+  
+	const activeRoute = derived(page, $page => $page.url.pathname);
+	
+	const navItems = [
+	  { label: 'Inicio', path: '/' },
+	  { label: 'Productos', path: '/productos' },
+	  { label: 'Carrito 🛒', path: '/carrito' }
+	];
+  
+	function navigate(path: string) {
+	  goto(path);
+	}
+  </script>
+  
+  <nav class="bg-white border-b border-gray-200 shadow-sm">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+	  <h1 class="text-xl font-bold text-gray-800 cursor-pointer" on:click={() => navigate('/')}>
+		Tienda Celulares
+	  </h1>
+  
+	  <ul class="flex space-x-6">
+		{#each navItems as item}
+		  <li>
+			<a
+			  href={item.path}
+			  class="text-gray-600 hover:text-blue-600 font-medium transition-all duration-200"
+			  class:selected={$activeRoute === item.path ? 'text-blue-600 font-semibold' : ''}
+			>
+			  {item.label}
+			</a>
+		  </li>
+		{/each}
+	  </ul>
 	</div>
-</nav>
+  </nav>
+  
+  <style>
+	a.selected {
+	  border-bottom: 2px solid #2563eb; /* Tailwind's blue-600 */
+	  padding-bottom: 2px;
+	}
+  </style>
+  
