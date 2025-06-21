@@ -35,7 +35,12 @@
 
 			<div class="text-right mt-6">
 				<p class="text-xl font-semibold">Total: ${total}</p>
-				<button class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+				<a href="/checkout">
+					<button class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+						Ir al checkout
+					</button>
+				</a>
+				<button class="mt-4 ml-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
 					Finalizar compra
 				</button>
 			</div>
