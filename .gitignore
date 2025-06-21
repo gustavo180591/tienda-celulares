@@ -1,13 +1,16 @@
 # Dependencies
 node_modules
+frontend/node_modules
 
 # Build outputs
 .output
 .vercel
 .netlify
 .wrangler
-/.svelte-kit
-/build
+.svelte-kit
+build
+frontend/build
+frontend/.svelte-kit
 
 # OS files
 .DS_Store
