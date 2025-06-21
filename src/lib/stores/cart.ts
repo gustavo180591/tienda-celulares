@@ -41,4 +41,10 @@ function limpiarCarrito() {
 	carrito.set([]);
 }
 
-export { carrito, agregarAlCarrito, limpiarCarrito };
+function eliminarDelCarrito(id: number) {
+	carrito.update(items => items.filter(item => item.id !== id));
+}
+
+
+export { carrito, agregarAlCarrito, eliminarDelCarrito, limpiarCarrito };
+

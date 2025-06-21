@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { carrito } from '$lib/stores/cart';
+	import { eliminarDelCarrito } from '$lib/stores/cart';
+
 	import { get } from 'svelte/store';
 
 	$: items = $carrito;
@@ -22,6 +24,12 @@
 						</div>
 					</div>
 					<!-- Eliminar botón (opcional más adelante) -->
+					<button
+					on:click={() => eliminarDelCarrito(item.id)}
+					class="text-red-600 hover:text-red-800 font-bold text-lg"
+					title="Eliminar del carrito">
+					❌
+				</button>
 				</div>
 			{/each}
 
