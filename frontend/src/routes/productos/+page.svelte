@@ -1,43 +1,23 @@
 <script lang="ts">
-	type Producto = {
-		id: number;
-		nombre: string;
-		precio: number;
-		imagen: string;
-	};
+	import type { PageData } from './$types';
 
-	const productos: Producto[] = [
-		{ id: 1, nombre: 'iPhone 14 Pro', precio: 999, imagen: 'https://via.placeholder.com/300x200' },
-		{
-			id: 2,
-			nombre: 'Samsung Galaxy S23',
-			precio: 899,
-			imagen: 'https://via.placeholder.com/300x200'
-		},
-		{ id: 3, nombre: 'Xiaomi 13 Pro', precio: 799, imagen: 'https://via.placeholder.com/300x200' }
-	];
+	export let data: PageData;
 </script>
 
-<section class="min-h-screen bg-gray-100 p-6">
-	<h1 class="mb-6 text-center text-3xl font-bold">Catálogo de Celulares</h1>
+<h1 class="text-2xl font-bold mb-4">Catálogo de Productos</h1>
 
-	<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-		{#each productos as producto}
-			<div class="overflow-hidden rounded-lg bg-white shadow-md">
-				<img src={producto.imagen} alt={producto.nombre} class="h-48 w-full object-cover" />
-				<div class="p-4">
-					<h2 class="text-xl font-semibold">{producto.nombre}</h2>
-					<p class="text-gray-600">${producto.precio}</p>
-					<button class="mt-3 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-						<a
-							href={`/productos/${producto.id}`}
-							class="mt-3 inline-block rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-						>
-							Ver más
-						</a>
-					</button>
-				</div>
-			</div>
-		{/each}
-	</div>
-</section>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+	{#each data.productos as producto}
+		<div class="border p-4 rounded shadow hover:shadow-md transition">
+			<img src={producto.imagen} alt={producto.nombre} class="w-full h-48 object-cover rounded mb-2" />
+			<h2 class="text-lg font-semibold">{producto.nombre}</h2>
+			<p class="text-gray-700 mb-2">${producto.precio}</p>
+			<button
+				on:click={() => alert(`Agregar ${producto.nombre} al carrito`)}
+				class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded"
+			>
+				Añadir al carrito
+			</button>
+		</div>
+	{/each}
+</div>
