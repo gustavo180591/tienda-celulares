@@ -1,2 +1,22 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	import { carrito } from '$lib/stores/cart';
+	export let data;
+</script>
+
+<h1 class="text-2xl font-bold mb-4">Catálogo de Productos</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+	{#each data.productos as producto}
+		<div class="border p-4 rounded shadow hover:shadow-md transition">
+			<img src={producto.imagen} alt={producto.nombre} class="w-full h-48 object-cover rounded mb-2" />
+			<h2 class="text-lg font-semibold">{producto.nombre}</h2>
+			<p class="text-gray-700 mb-2">${producto.precio}</p>
+			<button
+				on:click={() => carrito.add(producto)}
+				class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded"
+			>
+				Añadir al carrito
+			</button>
+		</div>
+	{/each}
+</div>
