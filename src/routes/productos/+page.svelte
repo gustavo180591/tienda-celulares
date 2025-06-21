@@ -24,7 +24,9 @@
 					<h2 class="text-xl font-semibold">{producto.nombre}</h2>
 					<p class="text-gray-600">${producto.precio}</p>
 					<button class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-						Ver más
+						<a href={`/productos/${producto.id}`} class="mt-3 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Ver más
+                        </a>
 					</button>
 				</div>
 			</div>
