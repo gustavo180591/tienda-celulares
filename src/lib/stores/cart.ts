@@ -8,7 +8,16 @@ export type ProductoCarrito = {
 	cantidad: number;
 };
 
-const carrito = writable<ProductoCarrito[]>([]);
+// Cargar desde localStorage si existe
+const stored = localStorage.getItem('carrito');
+const inicial = stored ? JSON.parse(stored) : [];
+
+const carrito = writable<ProductoCarrito[]>(inicial);
+
+// Sincronizar cada vez que cambia
+carrito.subscribe(value => {
+	localStorage.setItem('carrito', JSON.stringify(value));
+});
 
 function agregarAlCarrito(producto: ProductoCarrito) {
 	carrito.update(items => {
