@@ -8,16 +8,23 @@ export type ProductoCarrito = {
 	cantidad: number;
 };
 
-// Cargar desde localStorage si existe
-const stored = localStorage.getItem('carrito');
-const inicial = stored ? JSON.parse(stored) : [];
+// Función para obtener el carrito del localStorage de manera segura
+const getStoredCart = (): ProductoCarrito[] => {
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('carrito');
+    return stored ? JSON.parse(stored) : [];
+  }
+  return [];
+};
 
-const carrito = writable<ProductoCarrito[]>(inicial);
+const carrito = writable<ProductoCarrito[]>(getStoredCart());
 
-// Sincronizar cada vez que cambia
-carrito.subscribe(value => {
-	localStorage.setItem('carrito', JSON.stringify(value));
-});
+// Sincronizar cada vez que cambia (solo en el cliente)
+if (typeof window !== 'undefined') {
+  carrito.subscribe(value => {
+    localStorage.setItem('carrito', JSON.stringify(value));
+  });
+}
 
 function agregarAlCarrito(producto: ProductoCarrito) {
 	carrito.update(items => {
